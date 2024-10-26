@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using System;
 
 public class PanelInteraction : MonoBehaviour
 {
     public GameObject canvas; // Canvas para mostrar el código
-    public TMP_InputField inputFieldGreen;  // Cambiar a TMP_InputField
-    public TMP_InputField inputFieldOrange; // Cambiar a TMP_InputField
-    public TMP_InputField inputFieldYellow; // Cambiar a TMP_InputField
+    public TMP_Dropdown dropdownGreen;  // Campo para el TMP_Dropdown verde
+    public TMP_Dropdown dropdownOrange; // Campo para el TMP_Dropdown naranja
+    public TMP_Dropdown dropdownYellow; // Cambiar a Dropdown
     public Animator doorAnimator; // La puerta con la animación de abrir
     private bool isCodeCorrect = false;
+    public TMP_InputField inputField;
     private bool doorOpened = false; // Añadimos esta variable para controlar el estado de la puerta
 
     void Start()
@@ -33,37 +36,32 @@ public class PanelInteraction : MonoBehaviour
     // Verificar el código ingresado por el jugador
     public void CheckCode()
     {
-        // Variables para almacenar los valores convertidos
-        int greenValue, orangeValue, yellowValue;
+        // Variables para almacenar los valores seleccionados del dropdown
+        string greenText = dropdownGreen.options[dropdownGreen.value].text;
+        string orangeText = dropdownOrange.options[dropdownOrange.value].text;
+        string yellowText = dropdownYellow.options[dropdownYellow.value].text;
+        int greenValue = int.Parse(greenText);
+        int orangeValue = int.Parse(orangeText);
+        int yellowValue = int.Parse(yellowText);
 
-        // Intentar convertir el texto a entero
-        bool greenValid = int.TryParse(inputFieldGreen.text, out greenValue);
-        bool orangeValid = int.TryParse(inputFieldOrange.text, out orangeValue);
-        bool yellowValid = int.TryParse(inputFieldYellow.text, out yellowValue);
-
-        // Verificar si todos los campos de entrada tienen un valor válido
-        if (greenValid && orangeValid && yellowValid)
+        // Verificar si el código es correcto
+        if (greenValue == 3 && orangeValue == 5 && yellowValue == 8)
         {
-            // Verificar si el código es correcto
-            if (greenValue == 3 && orangeValue == 5 && yellowValue == 8)
-            {
-                isCodeCorrect = true;
-                canvas.SetActive(false); // Esconder el canvas al ingresar el código correcto
-                OpenDoor(); // Llamar a la función para abrir la puerta
-            }
-            else
-            {
-                Debug.Log("Código incorrecto");
-                // Código incorrecto, esconder el canvas pero permitir que se pueda volver a abrir
-                canvas.SetActive(false); // Esconder el canvas
-            }
+            isCodeCorrect = true;
+            canvas.SetActive(false); // Esconder el canvas al ingresar el código correcto
+            OpenDoor(); // Llamar a la función para abrir la puerta
         }
         else
         {
-            Debug.Log("Uno o más campos contienen valores no válidos");
-            // Código inválido, esconder el canvas pero permitir que se pueda volver a abrir
+            Debug.Log("Código incorrecto");
+            // Código incorrecto, esconder el canvas pero permitir que se pueda volver a abrir
             canvas.SetActive(false); // Esconder el canvas
         }
+    }
+
+    public void OnButtonNumberClick(string number)
+    {
+        inputField.text += number;  // Agrega el número al campo de entrada
     }
 
     // Método para abrir la puerta solo si no ha sido abierta
@@ -84,5 +82,6 @@ public class PanelInteraction : MonoBehaviour
         canvas.transform.rotation = Quaternion.LookRotation(playerCamera.transform.forward);
     }
 }
+
 
 
