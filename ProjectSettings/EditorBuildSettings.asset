@@ -9,6 +9,10 @@ EditorBuildSettings:
     path: Assets/iPoly3D/Server Room/Demo/Demo.unity
     guid: fc7981980dd90ee40b53eda4bd70c5fb
   m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: a68138ca19cf2354ca968f1aa01eb3a0,
+      type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: a14aa6badf19d6746a4661be0d3eb153,
+      type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 957a605aaf817224eb9e022d0545c9c2,
       type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 8d160784f5fbdb74a9087fcb6166cfaf,
